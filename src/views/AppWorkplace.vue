@@ -1,9 +1,14 @@
 <template>
   <el-container style="height: 100%">
-    <el-header>Header</el-header>
+    <el-header>Call Center</el-header>
     <el-container>
-      <el-aside>Aside</el-aside>
-      <el-main>Main</el-main>
+      <el-aside>
+        <IncidentList />
+      </el-aside>
+      <el-main style="display: flex; padding: 0px">
+        <AppChat style="width: 70%" />
+        <IncidentInfo style="width: 30%" />
+      </el-main>
     </el-container>
   </el-container>
 </template>
