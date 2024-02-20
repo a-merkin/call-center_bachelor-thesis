@@ -46,6 +46,7 @@ const isSelected = computed(() => props.selectedIncident === props.id)
     border-radius: 10px;
     padding-right: 5px;
     padding-left: 5px;
+    color: #fff;
   }
 
   &__main-info {
@@ -55,8 +56,7 @@ const isSelected = computed(() => props.selectedIncident === props.id)
   }
 
   &.--selected {
-    background-color: #fff;
-    color: black;
+    background-color: rgb(210, 214, 255);
   }
 
   &__last-message {

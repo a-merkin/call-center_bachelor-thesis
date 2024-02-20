@@ -1,6 +1,12 @@
 <template>
   <div class="list">
-    <IncidentCard v-bind="incident" :selectedIncident="selectedIncident" @click="handleIncidentSelect(incident.id)" v-for="incident in incidentsList" :key="incident.id" />
+    <IncidentCard
+      v-bind="incident"
+      :selectedIncident="selectedIncident"
+      @click="handleIncidentSelect(incident.id)"
+      v-for="incident in incidentsList"
+      :key="incident.id"
+    />
   </div>
 </template>
 
@@ -33,7 +39,7 @@ const incidentsList = [
   }
 ] as Incident[]
 
-const selectedIncident = ref()
+const selectedIncident = ref(1)
 
 const handleIncidentSelect = (id) => {
   selectedIncident.value = id

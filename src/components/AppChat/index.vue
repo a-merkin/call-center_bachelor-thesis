@@ -1,5 +1,5 @@
 <template>
-  <div class="chat">
+  <div class="chat" @keyup.enter="sendMessage">
     <div class="chat__container">
       <el-card class="chat__window">
         <div class="chat__messages">
@@ -80,7 +80,7 @@ export default defineComponent({
         const newMessageObject: Message = {
           id: messages.value.length + 1,
           title: 'Название', // Замените на нужное название
-          full_name: 'Ваше имя', // Замените на имя отправителя
+          full_name: 'Оператор', // Замените на имя отправителя
           last_message: newMessage.value.trim(),
           time: new Date().toLocaleTimeString()
         }
