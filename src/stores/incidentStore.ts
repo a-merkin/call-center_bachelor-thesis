@@ -5,6 +5,7 @@ import type { Incident } from '@/types/incident';
 interface IncidentState {
   incidents: Incident[];
   selectedIncidentId: number | null;
+  isModalOpen: boolean;
 }
 
 export const useIncidentStore = defineStore('incident', {
@@ -14,6 +15,7 @@ export const useIncidentStore = defineStore('incident', {
         id: 1,
         fio: 'Меркин А.Д.',
         group: 'MTH-101',
+        faculty: 'ИИМРТ',
         school: null,
         reason: 'Прошу разрешить пересдать экзамен по математике.',
         time: '15:38',
@@ -27,6 +29,7 @@ export const useIncidentStore = defineStore('incident', {
         fio: null,
         group: null,
         school: 'Школа №15',
+        faculty: null,
         reason: 'Необходимо получить справку об обучении для предоставления в военкомат.',
         time: '10:20',
         date: '01.05',
@@ -38,6 +41,7 @@ export const useIncidentStore = defineStore('incident', {
         id: 3,
         fio: 'Петров В.И.',
         group: 'CSE-202',
+        faculty: 'ИИМРТ',
         school: null,
         reason:
           'Прошу предоставить информацию о количестве кредитов, необходимых для завершения курса.',
@@ -51,6 +55,7 @@ export const useIncidentStore = defineStore('incident', {
         id: 4,
         fio: 'Петров В.И.',
         group: 'CSE-202',
+        faculty: 'ИИМРТ',
         school: null,
         reason:
           'Прошу предоставить информацию о количестве кредитов, необходимых для завершения курса.',
@@ -63,6 +68,7 @@ export const useIncidentStore = defineStore('incident', {
       // More incidents...
     ],
     selectedIncidentId: null,
+    isModalOpen: false,
   }),
 
   getters: {
@@ -99,6 +105,15 @@ export const useIncidentStore = defineStore('incident', {
     // Действие для очистки выбранного инцидента
     clearSelectedIncident() {
       this.selectedIncidentId = null;
+    },
+
+    openModal() {
+      this.isModalOpen = true;
+    },
+
+    // Действие для закрытия модального окна
+    closeModal() {
+      this.isModalOpen = false;
     },
   },
 });
