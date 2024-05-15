@@ -38,12 +38,18 @@
           <el-option label="Отменено" value="cancelled"></el-option>
         </el-select>
       </div>
+      <div class="incident-info__actions">
+        <el-button type="primary" @click="saveIncident">Сохранить</el-button>
+        <el-button @click="clearSelectedIncident">Очистить</el-button>
+      </div>
     </el-card>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, watch, computed } from 'vue';
+import { useIncidentStore } from '@/stores/incidentStore';
+import type { Incident } from '@/types/incident';
 
 interface IncidentInfo {
   id: number;
@@ -62,6 +68,7 @@ interface IncidentInfo {
 export default defineComponent({
   name: 'IncidentInfo',
   setup() {
+    const incidentStore = useIncidentStore();
     const incident = ref<IncidentInfo>({
       id: 0,
       fio: null,
@@ -76,6 +83,14 @@ export default defineComponent({
       status: 'new'
     });
 
+    const selectedIncident = computed(() => incidentStore.selectedIncident);
+
+    watch(selectedIncident, (newIncident) => {
+      if (newIncident) {
+        incident.value = { ...newIncident };
+      }
+    }, { immediate: true });
+
     const onGroupInput = () => {
       if (incident.value.group) {
         incident.value.school = null;
@@ -89,7 +104,21 @@ export default defineComponent({
       }
     };
 
-    return { incident, onGroupInput, onSchoolInput };
+    const saveIncident = () => {
+      if (incident.value.id) {
+        incidentStore.updateIncident(incident.value as Incident);
+      } else {
+        incident.value.id = Date.now();
+        incidentStore.addIncident(incident.value as Incident);
+      }
+      incidentStore.clearSelectedIncident();
+    };
+
+    const clearSelectedIncident = () => {
+      incidentStore.clearSelectedIncident();
+    };
+
+    return { incident, onGroupInput, onSchoolInput, saveIncident, clearSelectedIncident };
   }
 });
 </script>
@@ -114,6 +143,12 @@ export default defineComponent({
 
   &__input {
     width: 100%;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
   }
 }
 </style>

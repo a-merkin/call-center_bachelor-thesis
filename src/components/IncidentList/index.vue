@@ -3,7 +3,7 @@
     <div class="list">
       <IncidentCard
         v-bind="incident"
-        :selectedIncident="selectedIncident"
+        :selectedIncident="incidentStore.selectedIncidentId"
         @click="handleIncidentSelect(incident.id)"
         v-for="incident in incidents"
         :key="incident.id"
@@ -13,117 +13,20 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import type { Incident } from './types'
+import { ref } from 'vue';
+import { useIncidentStore } from '@/stores/incidentStore';
+import type { Incident } from '@/types/incident';
 
-const incidents: Incident[] = [
-  {
-    id: 1,
-    fio: 'Меркин А.Д.',
-    group: 'MTH-101',
-    school: null,
-    reason: 'Прошу разрешить пересдать экзамен по математике.',
-    time: '15:38',
-    date: '15.05',
-    source: 'bot',
-    phone: null,
-    status: 'new'
-  },
-  {
-    id: 2,
-    fio: null,
-    group: null,
-    school: 'Школа №15',
-    reason: 'Необходимо получить справку об обучении для предоставления в военкомат.',
-    time: '10:20',
-    date: '01.05',
-    source: 'call',
-    phone: '123-456-7890',
-    status: 'in-progress'
-  },
-  {
-    id: 3,
-    fio: 'Петров В.И.',
-    group: 'CSE-202',
-    school: null,
-    reason:
-      'Прошу предоставить информацию о количестве кредитов, необходимых для завершения курса.',
-    time: '08:45',
-    date: '14.04',
-    source: 'bot',
-    phone: null,
-    status: 'completed'
-  },
-  {
-    id: 5,
-    fio: 'Петров В.И.',
-    group: 'CSE-202',
-    school: null,
-    reason:
-      'Прошу предоставить информацию о количестве кредитов, необходимых для завершения курса.',
-    time: '08:45',
-    date: '14.04',
-    source: 'bot',
-    phone: null,
-    status: 'cancelled'
-  },
-  {
-    id: 1,
-    fio: 'Меркин А.Д.',
-    group: 'MTH-101',
-    school: null,
-    reason: 'Прошу разрешить пересдать экзамен по математике.',
-    time: '15:38',
-    date: '15.05',
-    source: 'bot',
-    phone: null,
-    status: 'new'
-  },
-  {
-    id: 2,
-    fio: null,
-    group: null,
-    school: 'Школа №15',
-    reason: 'Необходимо получить справку об обучении для предоставления в военкомат.',
-    time: '10:20',
-    date: '01.05',
-    source: 'call',
-    phone: '123-456-7890',
-    status: 'in-progress'
-  },
-  {
-    id: 3,
-    fio: 'Петров В.И.',
-    group: 'CSE-202',
-    school: null,
-    reason:
-      'Прошу предоставить информацию о количестве кредитов, необходимых для завершения курса.',
-    time: '08:45',
-    date: '14.04',
-    source: 'bot',
-    phone: null,
-    status: 'completed'
-  },
-  {
-    id: 5,
-    fio: 'Петров В.И.',
-    group: 'CSE-202',
-    school: null,
-    reason:
-      'Прошу предоставить информацию о количестве кредитов, необходимых для завершения курса.',
-    time: '08:45',
-    date: '14.04',
-    source: 'bot',
-    phone: null,
-    status: 'cancelled'
-  }
-]
+// Получение store
+const incidentStore = useIncidentStore();
 
-const selectedIncident = ref(1)
+// Получение состояния и действий из store
+const { incidents, selectIncident } = incidentStore;
 
+// Обработка выбора инцидента
 const handleIncidentSelect = (id: number) => {
-  selectedIncident.value = id
-}
+  selectIncident(id);
+};
 </script>
 
 <style lang="scss" scoped>
