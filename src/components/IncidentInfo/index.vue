@@ -14,8 +14,16 @@
         <el-input v-model="incident.phone" placeholder="Введите номер телефона" class="incident-info__input"></el-input>
       </div>
       <div class="incident-info__item">
-        <label class="incident-info__label">Группа/Школа:</label>
-        <el-input v-model="incident.groupSchool" placeholder="Введите группу или школу" class="incident-info__input"></el-input>
+        <label class="incident-info__label">Группа:</label>
+        <el-input v-model="incident.group" placeholder="Введите группу" class="incident-info__input" @input="onGroupInput"></el-input>
+      </div>
+      <div class="incident-info__item" v-if="incident.group">
+        <label class="incident-info__label">Факультет:</label>
+        <el-input v-model="incident.faculty" placeholder="Введите факультет" class="incident-info__input"></el-input>
+      </div>
+      <div class="incident-info__item">
+        <label class="incident-info__label">Школа:</label>
+        <el-input v-model="incident.school" placeholder="Введите школу" class="incident-info__input" @input="onSchoolInput"></el-input>
       </div>
       <div class="incident-info__item">
         <label class="incident-info__label">Описание обращения:</label>
@@ -37,28 +45,51 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 
-interface Incident {
-  date: string;
-  fio: string;
-  phone: string;
-  groupSchool: string;
+interface IncidentInfo {
+  id: number;
+  fio: string | null;
+  group: string | null;
+  faculty: string | null;
+  school: string | null;
   reason: string;
+  time: string;
+  date: string;
+  source: 'call' | 'bot';
+  phone: string | null;
   status: 'new' | 'in-progress' | 'completed' | 'cancelled';
 }
 
 export default defineComponent({
   name: 'IncidentInfo',
   setup() {
-    const incident = ref<Incident>({
-      date: '',
-      fio: '',
-      phone: '',
-      groupSchool: '',
+    const incident = ref<IncidentInfo>({
+      id: 0,
+      fio: null,
+      group: null,
+      faculty: null,
+      school: null,
       reason: '',
+      time: '',
+      date: '',
+      source: 'bot',
+      phone: null,
       status: 'new'
     });
 
-    return { incident };
+    const onGroupInput = () => {
+      if (incident.value.group) {
+        incident.value.school = null;
+      }
+    };
+
+    const onSchoolInput = () => {
+      if (incident.value.school) {
+        incident.value.group = null;
+        incident.value.faculty = null;
+      }
+    };
+
+    return { incident, onGroupInput, onSchoolInput };
   }
 });
 </script>
