@@ -1,7 +1,12 @@
 export interface Incident {
-  id: number
-  title: string
-  full_name: string
-  time: string
-  last_message: string
+  id: number;
+  fio: string | null;
+  group: string | null;
+  school: string | null;
+  reason: string;
+  time: string;
+  date: string;
+  source: 'call' | 'bot';
+  phone: string | null;
+  status: 'new' | 'in-progress' | 'completed' | 'cancelled';
 }

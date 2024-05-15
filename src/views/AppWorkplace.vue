@@ -1,5 +1,5 @@
 <template>
-  <el-container style="height: 100%">
+  <el-container style="max-height: 100vh">
     <el-header>Call Center</el-header>
     <el-container>
       <el-aside>
@@ -12,13 +12,3 @@
     </el-container>
   </el-container>
 </template>
-
-<style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-}
-</style>

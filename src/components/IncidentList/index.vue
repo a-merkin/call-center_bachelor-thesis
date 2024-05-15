@@ -1,56 +1,138 @@
 <template>
-  <div class="list">
-    <IncidentCard
-      v-bind="incident"
-      :selectedIncident="selectedIncident"
-      @click="handleIncidentSelect(incident.id)"
-      v-for="incident in incidentsList"
-      :key="incident.id"
-    />
-  </div>
+  <el-scrollbar height="calc(100vh - 60px)">
+    <div class="list">
+      <IncidentCard
+        v-bind="incident"
+        :selectedIncident="selectedIncident"
+        @click="handleIncidentSelect(incident.id)"
+        v-for="incident in incidents"
+        :key="incident.id"
+      />
+    </div>
+  </el-scrollbar>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Incident } from './types'
+import type { Incident } from './types'
 
-const incidentsList = [
+const incidents: Incident[] = [
   {
     id: 1,
-    title: 'Кот на дереве',
-    full_name: 'Меркин А.Д',
-    last_message: 'Text text text',
-    time: '15:38'
+    fio: 'Меркин А.Д.',
+    group: 'MTH-101',
+    school: null,
+    reason: 'Прошу разрешить пересдать экзамен по математике.',
+    time: '15:38',
+    date: '15.05',
+    source: 'bot',
+    phone: null,
+    status: 'new'
   },
   {
     id: 2,
-    title: 'Проблема с водоснабжением',
-    full_name: 'Иванова Е.С',
-    last_message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    time: '10:20'
+    fio: null,
+    group: null,
+    school: 'Школа №15',
+    reason: 'Необходимо получить справку об обучении для предоставления в военкомат.',
+    time: '10:20',
+    date: '01.05',
+    source: 'call',
+    phone: '123-456-7890',
+    status: 'in-progress'
   },
   {
     id: 3,
-    title: 'Повреждение дороги',
-    full_name: 'Петров В.И',
-    last_message:
-      'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    time: '08:45'
+    fio: 'Петров В.И.',
+    group: 'CSE-202',
+    school: null,
+    reason:
+      'Прошу предоставить информацию о количестве кредитов, необходимых для завершения курса.',
+    time: '08:45',
+    date: '14.04',
+    source: 'bot',
+    phone: null,
+    status: 'completed'
+  },
+  {
+    id: 5,
+    fio: 'Петров В.И.',
+    group: 'CSE-202',
+    school: null,
+    reason:
+      'Прошу предоставить информацию о количестве кредитов, необходимых для завершения курса.',
+    time: '08:45',
+    date: '14.04',
+    source: 'bot',
+    phone: null,
+    status: 'cancelled'
+  },
+  {
+    id: 1,
+    fio: 'Меркин А.Д.',
+    group: 'MTH-101',
+    school: null,
+    reason: 'Прошу разрешить пересдать экзамен по математике.',
+    time: '15:38',
+    date: '15.05',
+    source: 'bot',
+    phone: null,
+    status: 'new'
+  },
+  {
+    id: 2,
+    fio: null,
+    group: null,
+    school: 'Школа №15',
+    reason: 'Необходимо получить справку об обучении для предоставления в военкомат.',
+    time: '10:20',
+    date: '01.05',
+    source: 'call',
+    phone: '123-456-7890',
+    status: 'in-progress'
+  },
+  {
+    id: 3,
+    fio: 'Петров В.И.',
+    group: 'CSE-202',
+    school: null,
+    reason:
+      'Прошу предоставить информацию о количестве кредитов, необходимых для завершения курса.',
+    time: '08:45',
+    date: '14.04',
+    source: 'bot',
+    phone: null,
+    status: 'completed'
+  },
+  {
+    id: 5,
+    fio: 'Петров В.И.',
+    group: 'CSE-202',
+    school: null,
+    reason:
+      'Прошу предоставить информацию о количестве кредитов, необходимых для завершения курса.',
+    time: '08:45',
+    date: '14.04',
+    source: 'bot',
+    phone: null,
+    status: 'cancelled'
   }
-] as Incident[]
+]
 
 const selectedIncident = ref(1)
 
-const handleIncidentSelect = (id) => {
+const handleIncidentSelect = (id: number) => {
   selectedIncident.value = id
 }
 </script>
 
 <style lang="scss" scoped>
 .list {
-  padding-top: 12px;
+  padding-top: 15px;
   display: flex;
   flex-direction: column;
   gap: 16px;
+  border-right: 1px solid #dcdfe6;
+  border-collapse: collapse;
 }
 </style>
