@@ -1,5 +1,5 @@
 <template>
-  <el-scrollbar height="calc(100vh - 60px)">
+  <el-scrollbar style="border-right: 1px solid #dcdfe6;" height="calc(100vh - 60px)">
     <div class="list">
       <IncidentCard
         v-bind="incident"
@@ -35,7 +35,6 @@ const handleIncidentSelect = (id: number) => {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  border-right: 1px solid #dcdfe6;
   border-collapse: collapse;
 }
 </style>
