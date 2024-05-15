@@ -3,6 +3,7 @@ export interface Incident {
   fio: string | null;
   group: string | null;
   school: string | null;
+  faculty: string | null;
   reason: string;
   time: string;
   date: string;

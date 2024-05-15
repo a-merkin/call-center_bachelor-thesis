@@ -111,14 +111,9 @@ export default defineComponent({
         incident.value.id = Date.now();
         incidentStore.addIncident(incident.value as Incident);
       }
-      incidentStore.clearSelectedIncident();
     };
 
-    const clearSelectedIncident = () => {
-      incidentStore.clearSelectedIncident();
-    };
-
-    return { incident, onGroupInput, onSchoolInput, saveIncident, clearSelectedIncident };
+    return { incident, onGroupInput, onSchoolInput, saveIncident };
   }
 });
 </script>
