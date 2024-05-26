@@ -35,6 +35,7 @@ declare module 'vue' {
     IncidentCard: typeof import('./src/components/IncidentList/IncidentCard/index.vue')['default']
     IncidentInfo: typeof import('./src/components/IncidentInfo/index.vue')['default']
     IncidentList: typeof import('./src/components/IncidentList/index.vue')['default']
+    IncomingCallModal: typeof import('./src/components/IncomingCallModal.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TheWelcome: typeof import('./src/components/TheWelcome.vue')['default']

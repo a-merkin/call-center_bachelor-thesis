@@ -1,5 +1,11 @@
 <template>
-  <VueFinalModal v-model="incidentStore.isModalOpen" width="600px" height="400px" :maskClosable="false">
+  <VueFinalModal
+    v-model="incidentStore.isModalOpen"
+    style="display: flex; justify-content: center; align-items: center"
+    width="600px"
+    height="400px"
+    :maskClosable="false"
+  >
     <template #default>
       <div class="assign-modal">
         <h2>Распределение заявки по отделам</h2>
@@ -44,9 +50,10 @@ const closeModalHandler = () => {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .assign-modal {
   padding: 20px;
+  background-color: #fff;
 }
 
 .assign-modal__actions {
