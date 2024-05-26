@@ -3,7 +3,6 @@
 
 <template>
   <RouterView />
-  <ModalsContainer />
 </template>
 
 <script setup lang="ts">

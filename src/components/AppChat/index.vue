@@ -1,140 +1,121 @@
 <template>
-  <div class="chat" @keyup.enter="sendMessage">
-    <div class="chat__container">
-      <el-card class="chat__window">
-        <div class="chat__messages">
-          <div v-for="message in messages" :key="message.id" class="chat__message">
-            <div class="chat__message-meta">{{ message.full_name }} - {{ message.time }}</div>
-            <div class="chat__message-text">{{ message.last_message }}</div>
+  <div class="chat-container">
+    <el-card class="chat-window">
+      <el-scrollbar style="border-right: 1px solid #dcdfe6" height="calc(100vh - 180px)">
+        <div class="chat-messages" ref="messageList">
+          <div
+            v-for="message in messages"
+            :key="message.id"
+            :class="[
+              'chat-message',
+              message.sender === 'operator' ? 'operator-message' : 'user-message'
+            ]"
+          >
+            <span>{{ message.text }}</span>
           </div>
         </div>
-      </el-card>
-    </div>
-    <el-card body-class="chat__input-container">
+      </el-scrollbar>
+    </el-card>
+    <div class="chat-input">
       <el-input
         v-model="newMessage"
-        placeholder="Введите ваше сообщение"
-        class="chat__input-message"
-      ></el-input>
-      <el-button type="primary" @click="sendMessage" class="chat__send-button">Отправить</el-button>
-    </el-card>
+        placeholder="Введите сообщение"
+        @keyup.enter.native="sendMessage"
+        :rows="2"
+      />
+      <el-button type="primary" @click="sendMessage">Отправить</el-button>
+    </div>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue'
+<script setup lang="ts">
+import { ref, Ref, onMounted, nextTick } from 'vue'
+import { ElMessage } from 'element-plus'
 
 interface Message {
   id: number
-  title: string
-  full_name: string
-  last_message: string
-  time: string
+  text: string
+  sender: 'operator' | 'user'
 }
 
-export default defineComponent({
-  name: 'Chat',
-  setup() {
-    const messages = ref<Message[]>([
-      {
-        id: 1,
-        title: 'Утечка газа',
-        full_name: 'Меркин А.Д',
-        last_message: 'Text text text',
-        time: '15:38'
-      },
-      {
-        id: 2,
-        title: 'Проблема с водоснабжением',
-        full_name: 'Иванова Е.С',
-        last_message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        time: '10:20'
-      },
-      {
-        id: 3,
-        title: 'Повреждение дороги',
-        full_name: 'Петров В.И',
-        last_message:
-          'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-        time: '08:45'
-      },
-      {
-        id: 4,
-        title: 'Утечка газа',
-        full_name: 'Оператор',
-        last_message: 'Принято. Специалист уже выехал на место.',
-        time: '15:40'
-      },
-      {
-        id: 5,
-        title: 'Утечка газа',
-        full_name: 'Меркин А.Д',
-        last_message: 'Спасибо за оперативность.',
-        time: '15:42'
-      }
-    ])
-    const newMessage = ref<string>('')
+const messages: Ref<Message[]> = ref([
+  { id: 1, text: 'Здравствуйте! Как я могу вам помочь?', sender: 'operator' },
+  { id: 2, text: 'У меня вопрос по поводу курса.', sender: 'user' }
+])
 
-    const sendMessage = () => {
-      if (newMessage.value.trim() !== '') {
-        const newMessageObject: Message = {
-          id: messages.value.length + 1,
-          title: 'Название', // Замените на нужное название
-          full_name: 'Оператор', // Замените на имя отправителя
-          last_message: newMessage.value.trim(),
-          time: new Date().toLocaleTimeString()
-        }
-        messages.value.push(newMessageObject)
-        newMessage.value = ''
-      }
-    }
+const newMessage: Ref<string> = ref('')
 
-    return { messages, newMessage, sendMessage }
+const sendMessage = () => {
+  if (newMessage.value.trim() === '') {
+    ElMessage.warning('Сообщение не может быть пустым')
+    return
   }
+  messages.value.push({ id: Date.now(), text: newMessage.value, sender: 'operator' })
+  newMessage.value = ''
+  scrollToBottom()
+}
+
+const scrollToBottom = () => {
+  nextTick(() => {
+    const messageList = document.querySelector('.chat-messages') as HTMLElement
+    messageList.scrollTop = messageList.scrollHeight
+  })
+}
+
+onMounted(() => {
+  scrollToBottom()
 })
 </script>
 
-<style lang="scss" scoped>
-.chat {
+<style scoped lang="scss">
+.chat-container {
   display: flex;
   flex-direction: column;
+  background-color: #f5f5f5;
+}
+
+.chat-window {
+  width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
-  &__container {
-    flex: 1;
-    overflow-y: auto;
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
+  background-color: #fff;
+  border-bottom: 1px solid #eaeaea;
+}
 
-    &__window {
-      height: 100%;
+.chat-message {
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+}
 
-      &__messages {
-        display: flex;
-        flex-direction: column;
+.operator-message {
+  background-color: #e3f2fd;
+  text-align: left;
+}
 
-        &__message {
-          margin-bottom: 10px;
+.user-message {
+  background-color: #c8e6c9;
+  text-align: right;
+}
 
-          &__meta {
-            font-weight: bold;
-          }
-        }
-      }
-    }
-  }
+.chat-input {
+  display: flex;
+  align-items: center;
+  padding: 20px 10px;
+  background-color: #fff;
+  border-top: 1px solid #eaeaea;
+}
 
-  &__input-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 10px;
-
-    &__input-message {
-      margin-right: 10px;
-    }
-
-    &__send-button {
-      width: 100px;
-    }
-  }
+.chat-input el-input {
+  flex: 1;
+  margin-right: 10px;
 }
 </style>
