@@ -2,15 +2,16 @@
   <VueFinalModal
     v-model="callStore.isModalOpen"
     style="display: flex; justify-content: center; align-items: center"
-    width="600px"
-    height="400px"
+    width="500px"
+    height="350px"
     :maskClosable="false"
   >
     <template #default>
       <div class="call-modal">
         <h3>Входящий звонок</h3>
-        <p>От: {{ callerType }}</p>
-        <p>Номер: {{ callerNumber }}</p>
+        <p><strong>От:</strong> {{ callStore.callerType }}</p>
+        <p><strong>Тип обращеня:</strong> {{ callStore.incidentType }}</p>
+        <p><strong>Номер:</strong> {{ callStore.callerNumber }}</p>
         <div class="call-modal-actions">
           <el-button type="success" @click="acceptCall">Принять</el-button>
           <el-button type="danger" @click="rejectCall">Отклонить</el-button>
@@ -20,62 +21,58 @@
   </VueFinalModal>
 </template>
 
-<script setup>
-import { ref } from 'vue'
-import { useCallStore } from '@/stores/callStore'
-import { useVfm, VueFinalModal } from 'vue-final-modal'
+<script setup lang="ts">
+import { useCallStore } from '@/stores/callStore';
+import { useVfm, VueFinalModal } from 'vue-final-modal';
 
-const callStore = useCallStore()
-const isCallModalVisible = ref(false)
-const callerType = ref('абитуриента')
-const callerNumber = ref('+79170474826')
+const callStore = useCallStore();
 
-const { openModal, closeModal } = useVfm()
-
-const handleClose = () => {
-  isCallModalVisible.value = false
-}
+const { openModal, closeModal } = useVfm();
 
 const acceptCall = () => {
-  // Логика принятия звонка
-  console.log('Call accepted')
-  callStore.closeModal()
-}
+  // Logic to accept the call
+  console.log('Call accepted');
+  callStore.closeModal();
+};
 
 const rejectCall = () => {
-  callStore.closeModal()
-}
+  callStore.closeModal();
+};
 </script>
 
 <style scoped lang="scss">
 .call-modal {
   padding: 20px;
   background-color: #fff;
-}
-
-.assign-modal__actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-top: 20px;
-}
-
-.call-modal {
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
 
   h3 {
     margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
   }
 
   p {
-    font-size: 18px;
+    font-size: 16px;
     margin: 10px 0;
+    color: #555;
+
+    strong {
+      color: #333;
+    }
   }
 
   .call-modal-actions {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+    gap: 20px;
     margin-top: 20px;
+
+    .el-button {
+      width: 100px;
+    }
   }
 }
 </style>
