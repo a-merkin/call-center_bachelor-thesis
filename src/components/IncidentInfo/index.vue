@@ -134,7 +134,6 @@ export default defineComponent({
 <style lang="scss" scoped>
 .incident-info {
   &__card {
-    margin-bottom: 20px;
     width: 100%;
     height: 100%;
   }

@@ -1,7 +1,7 @@
 <template>
   <div class="chat-container">
     <el-card class="chat-window">
-      <el-scrollbar style="border-right: 1px solid #dcdfe6" height="calc(100vh - 180px)">
+      <el-scrollbar style="border-right: 1px solid #dcdfe6" :height="chatContainerHeight">
         <div class="chat-messages" ref="messageList">
           <div
             v-for="message in messages"
@@ -29,8 +29,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, Ref, onMounted, nextTick } from 'vue'
+import { ref, onMounted, nextTick, computed } from 'vue'
+import type { Ref, ComputedRef } from 'vue'
 import { ElMessage } from 'element-plus'
+import { useCallStore } from '@/stores/callStore';
+
+const callStore = useCallStore();
 
 interface Message {
   id: number
@@ -44,6 +48,10 @@ const messages: Ref<Message[]> = ref([
 ])
 
 const newMessage: Ref<string> = ref('')
+
+const chatContainerHeight: ComputedRef<string> = computed(() => {
+  return callStore.isCallActive ? 'calc(100vh - 280px)' : 'calc(100vh - 180px)'
+})
 
 const sendMessage = () => {
   if (newMessage.value.trim() === '') {
@@ -72,6 +80,7 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   background-color: #f5f5f5;
+  height: 100%;
 }
 
 .chat-window {

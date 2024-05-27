@@ -27,12 +27,10 @@ import { useVfm, VueFinalModal } from 'vue-final-modal';
 
 const callStore = useCallStore();
 
-const { openModal, closeModal } = useVfm();
-
 const acceptCall = () => {
   // Logic to accept the call
   console.log('Call accepted');
-  callStore.closeModal();
+  callStore.startCall();
 };
 
 const rejectCall = () => {
