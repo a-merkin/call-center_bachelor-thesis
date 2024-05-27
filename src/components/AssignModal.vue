@@ -10,9 +10,17 @@
       <div class="assign-modal">
         <h2>Распределение заявки по отделам</h2>
         <el-select v-model="selectedDepartment" placeholder="Выберите отдел">
-          <el-option label="Отдел 1" value="department1"></el-option>
-          <el-option label="Отдел 2" value="department2"></el-option>
-          <el-option label="Отдел 3" value="department3"></el-option>
+          <el-option label="Учебный отдел" value="department1"></el-option>
+          <el-option label="Приемная комиссия" value="department2"></el-option>
+          <el-option label="Канцелярия" value="department3"></el-option>
+          <el-option label="Бухгалтерия" value="department1"></el-option>
+          <el-option label="Отдел кадров" value="department2"></el-option>
+          <el-option label="Библиотека" value="department3"></el-option>
+          <el-option label="IT-отдел" value="department1"></el-option>
+          <el-option label="Студенческий совет" value="department2"></el-option>
+          <el-option label="Научный отдел" value="department3"></el-option>
+          <el-option label="Отдел международных связей" value="department1"></el-option>
+          <el-option label="Отдел безопасности" value="department2"></el-option>
         </el-select>
         <div class="assign-modal__actions">
           <el-button type="primary" @click="assignIncident">Назначить</el-button>

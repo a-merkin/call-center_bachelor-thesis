@@ -11,6 +11,19 @@ interface IncidentState {
 export const useIncidentStore = defineStore('incident', {
   state: (): IncidentState => ({
     incidents: [
+    {
+    "id": 18,
+    "fio": null,
+    "group": null,
+    "faculty": null,
+    "school": null,
+    "reason": "Приемная комиссия",
+    "time": "15:38",
+    "date": "15.05",
+    "source": "call",
+    "phone": '+79170474826',
+    "status": "new"
+  },
   {
     "id": 1,
     "fio": "Меркин А.Д.",
@@ -129,7 +142,7 @@ export const useIncidentStore = defineStore('incident', {
     "status": "cancelled"
   }
 ],
-    selectedIncidentId: null,
+    selectedIncidentId: 18,
     isModalOpen: false,
   }),
 
