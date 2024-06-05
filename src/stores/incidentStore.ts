@@ -30,7 +30,7 @@ export const useIncidentStore = defineStore('incident', {
     "group": "MTH-101",
     "faculty": "ИИМРТ",
     "school": null,
-    "reason": "Прошу разрешить пересдать экзамен по математике.",
+    "reason": "Не могу зайти в СДО",
     "time": "15:38",
     "date": "15.05",
     "source": "bot",

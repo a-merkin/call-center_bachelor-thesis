@@ -11,16 +11,16 @@
         <h2>Распределение заявки по отделам</h2>
         <el-select v-model="selectedDepartment" placeholder="Выберите отдел">
           <el-option label="Учебный отдел" value="department1"></el-option>
-          <el-option label="Приемная комиссия" value="department2"></el-option>
+          <el-option label="Приемная комиссия" value="Приемная комисси"></el-option>
           <el-option label="Канцелярия" value="department3"></el-option>
-          <el-option label="Бухгалтерия" value="department1"></el-option>
-          <el-option label="Отдел кадров" value="department2"></el-option>
-          <el-option label="Библиотека" value="department3"></el-option>
-          <el-option label="IT-отдел" value="department1"></el-option>
-          <el-option label="Студенческий совет" value="department2"></el-option>
-          <el-option label="Научный отдел" value="department3"></el-option>
-          <el-option label="Отдел международных связей" value="department1"></el-option>
-          <el-option label="Отдел безопасности" value="department2"></el-option>
+          <el-option label="Бухгалтерия" value="department4"></el-option>
+          <el-option label="Отдел кадров" value="department5"></el-option>
+          <el-option label="Библиотека" value="department6"></el-option>
+          <el-option label="IT-отдел" value="department7"></el-option>
+          <el-option label="Студенческий совет" value="department8"></el-option>
+          <el-option label="Научный отдел" value="department9"></el-option>
+          <el-option label="Отдел международных связей" value="department10"></el-option>
+          <el-option label="Отдел безопасности" value="department11"></el-option>
         </el-select>
         <div class="assign-modal__actions">
           <el-button type="primary" @click="assignIncident">Назначить</el-button>
@@ -36,8 +36,6 @@ import { ref } from 'vue'
 import { useIncidentStore } from '@/stores/incidentStore'
 import { useVfm, VueFinalModal } from 'vue-final-modal'
 
-const { openModal, closeModal } = useVfm()
-
 const incidentStore = useIncidentStore()
 const isModalOpen = ref(incidentStore.isModalOpen)
 
@@ -49,7 +47,7 @@ const assignIncident = () => {
     console.log(
       `Инцидент ${incidentStore.selectedIncidentId} назначен отделу ${selectedDepartment.value}`
     )
-    closeModal()
+    incidentStore.isModalOpen = false
   }
 }
 

@@ -44,7 +44,7 @@ interface Message {
 
 const messages: Ref<Message[]> = ref([
   { id: 1, text: 'Здравствуйте! Как я могу вам помочь?', sender: 'operator' },
-  { id: 2, text: 'У меня вопрос по поводу курса.', sender: 'user' }
+  { id: 2, text: 'Не могу зайти в СДО', sender: 'user' }
 ])
 
 const newMessage: Ref<string> = ref('')
